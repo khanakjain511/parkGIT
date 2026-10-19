@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Perishables Black Box
 
-## Getting Started
+A cold-chain audit workspace built with Next.js 16, React 19, TypeScript, and Tailwind CSS 4. The interface follows the supplied dashboard reference with solid green surfaces, aligned layouts, and responsive navigation. No gradients or emoji assets are used. Motion for React (Framer Motion) provides shared spring transitions, coordinated reveals, SVG chart animation, and reduced-motion support.
 
-First, run the development server:
+Poppins is hosted locally through `next/font/local`. The shared light/dark palette covers the landing page, dashboard, charts, forms, and illustrations. Theme selection persists in browser storage, synchronizes across tabs, and follows the device preference until a theme is chosen. The circular theme reveal and candy button treatment adapt [DevClub UI’s Theme Toggle](https://ui.devclubxnst.com/components/theme-toggle) and [Candy Button](https://ui.devclubxnst.com/components/candy-button), with solid fills to preserve the no-gradient design. Component and font licenses are retained in `DEVCLUB-LICENSE.txt` and `src/app/fonts/OFL.txt`.
 
-```bash
+## Run locally
+
+Use Node.js 22.18 or later for the built-in TypeScript test runner.
+
+```sh
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [the landing page](http://localhost:3000) or [the audit workspace](http://localhost:3000/dashboard). Workspace sections have shareable fragment links, including `/dashboard#diagnostics` and `/dashboard#evidence`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+npm run lint
+npm run typecheck
+npm test
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Working software
 
-## Learn More
+- Product landing page with an interactive audit workflow, stakeholder explanations, keyboard-accessible FAQs, and direct links into the dashboard.
+- Dashboard with shipment search, status filtering, cargo values, thermal charts, alerts, and trust indicators.
+- Shipment creation and browser-persisted origin, departure, arrival, and unloading records.
+- Six-channel telemetry simulator and S1–S6 deterministic diagnostic workbench.
+- Crop-specific tomato, banana, and leafy-green temperature bands, including lower-bound chilling alerts.
+- Q₁₀ degradation ranges and cumulative exposure integration, with explicit assumptions.
+- Cross-probe and cooling-rate trust assessment, tamper simulation, and low-trust review holds.
+- Fifteen-minute origin stabilization gate and a destination-wait liability preview after 120 minutes.
+- Three-tier settlement recommendations, fund reconciliation, driver protection, and extreme-heat rejection handling.
+- Origin-gated insurance routing, including parametric, indemnity, and manual-review paths; downloadable claim drafts.
+- SHA-256 evidence JSON, paginated unsigned PDF certificate drafts, and CSV audit registers.
+- Device manifests, reviewed-alert tracking, driver self-view, and saved workspace preferences.
 
-To learn more about Next.js, take a look at the following resources:
+The calculation tests exercise physical scenario distinctions, mathematical benchmarks, chilling detection, tampering, financial conservation, exact tier thresholds, continuous origin history, demurrage thresholds, and claim-routing gaps.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Demonstration scope
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This is a local, software-only demonstration. Records and preferences are stored in the browser, not in a shared database. The illustrative chart series, device readings, completeness measures, and compliance bonuses are simulated. New origin records remain unclassified until a demo stabilization history is explicitly generated.
 
-## Deploy on Vercel
+Physical ESP32 acquisition, offline flash buffering, MQTT ingestion, ECDSA hardware verification, authentication, role-based access, geofence validation, production DTW-OC calibration, regional voice/SMS delivery, escrow/CBDC rails, and insurer connections require implementation with real devices, infrastructure, and partner credentials. No financial transaction, policy binding, or claim submission occurs.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The Q₁₀ parameters are uncalibrated demonstration assumptions; outputs are advisory ranges. Chilling injury and non-thermal damage require separate evaluation. The certificate is a preparation worksheet, not a statutory form or legal opinion, and requires custodian/expert completion and legal review. Language and retention settings are stored preferences; full interface translation and automatic data deletion are not implemented.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Source organization
+
+- `src/components`: dashboard, operations, diagnostics, settlements, custody, and shared interface elements.
+- `src/lib/motion.ts`: shared spring, fade, and reveal settings.
+- `src/components/motion.tsx`: animation configuration, button feedback, and view transitions.
+- `src/components/theme.tsx`: persisted theme synchronization and accessible theme toggle.
+- `src/lib/theme.ts`: shared theme keys and initialization before the first paint.
+- `src/lib/auditor.ts`: pure diagnostic, trust, degradation, settlement, origin, demurrage, and insurance rules.
+- `src/lib/workspace.ts`: browser persistence and downloadable evidence records.
+- `tests/auditor.test.mjs`: public-interface behavior checks using Node's test runner.
+
+The optional `skills-agents-all` checkout is excluded from application linting and TypeScript compilation. It remains project guidance rather than shipped application source.
