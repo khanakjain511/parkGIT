@@ -59,6 +59,12 @@ export function ThermalChart({
     ).join(" ");
   return (
     <div className="thermal-chart">
+      <div className="thermal-chart-header">
+        <span className="thermal-band-label">
+          <span className="status-dot" aria-hidden="true" />
+          {band.min}–{band.max}°C TARGET BAND
+        </span>
+      </div>
       <svg
         viewBox="0 0 680 220"
         role="img"
@@ -72,9 +78,6 @@ export function ThermalChart({
           height={y(band.min) - y(band.max)}
           fill="var(--soft)"
         />
-        <text x="535" y={y(band.max) + 12} fill="var(--muted)" fontSize="9">
-          {band.min}–{band.max}°C TARGET BAND
-        </text>
         {[0, 1, 2, 3].map((i) => {
           const value = top - (i * (top - bottom)) / 3;
           return (

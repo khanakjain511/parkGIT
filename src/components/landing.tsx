@@ -650,11 +650,6 @@ export default function Landing() {
       <footer className="landing-footer landing-container">
         <div className="landing-footer-top">
           <Brand />
-          <p>
-            Evidence for the people
-            <br />
-            behind every delivery.
-          </p>
           <nav aria-label="Footer navigation">
             <MotionLink href="#product">The platform</MotionLink>
             <MotionLink href="#workflow">How it works</MotionLink>
@@ -663,9 +658,6 @@ export default function Landing() {
         </div>
         <div className="landing-footer-bottom">
           <span>© 2026 Perishables Black Box</span>
-          <span>
-            Software demonstration · Advisory outputs · No live transactions
-          </span>
           <MotionLink href="#main-content">
             Back to top
             <Icon name="arrow" size={13} />

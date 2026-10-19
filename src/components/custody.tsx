@@ -3,6 +3,8 @@
 import { CandyButton } from "./motion";
 
 import { useState } from "react";
+import { AnimatePresence, m, useReducedMotion } from "motion/react";
+import { fadeTransition, interfaceSpring } from "@/lib/motion";
 import {
   arrivalLiability,
   crops,
@@ -11,6 +13,89 @@ import {
 } from "@/lib/auditor";
 import { Badge } from "./ui";
 import { Icon } from "./icon";
+
+function custodyPhase(shipment: Shipment) {
+  if (shipment.status === "Delivered" || shipment.handoverAt) return 3;
+  if (shipment.arrivedAt || shipment.status === "Awaiting unloading") return 2;
+  return shipment.status === "At origin" ? 0 : 1;
+}
+
+export function CustodyTrail({ shipment }: { shipment: Shipment }) {
+  const reduced = useReducedMotion();
+  const phase = custodyPhase(shipment);
+  let carrierDetail = "Trip completed";
+  if (phase === 0) carrierDetail = "Awaiting departure";
+  if (phase === 1)
+    carrierDetail =
+      shipment.status === "Attention" ? "Review required" : "In transit";
+  const steps = [
+    {
+      title: "Origin",
+      detail:
+        phase === 0 ? "Pre-cooling in progress" : "Loading record captured",
+    },
+    {
+      title: "Carrier",
+      detail: carrierDetail,
+    },
+    {
+      title: "Receiver",
+      detail:
+        phase === 3
+          ? "Handover recorded"
+          : phase === 2
+            ? "Awaiting unloading"
+            : "Awaiting arrival",
+    },
+  ];
+  return (
+    <ol className="custody-stepper" aria-label="Shipment custody progress">
+      {steps.map((step, index) => {
+        const completed = index < phase;
+        const current = index === phase;
+        return (
+          <li
+            key={step.title}
+            className={`custody-step ${completed ? "custody-step-completed" : current ? "custody-step-current" : ""}`}
+            aria-current={current ? "step" : undefined}
+          >
+            {index < steps.length - 1 && (
+              <span className="custody-connector" aria-hidden="true">
+                <m.span
+                  initial={false}
+                  animate={{ opacity: completed ? 1 : 0 }}
+                  transition={reduced ? { duration: 0 } : fadeTransition}
+                />
+              </span>
+            )}
+            <span className="custody-step-marker" aria-hidden="true">
+              <AnimatePresence initial={false} mode="wait">
+                <m.span
+                  key={completed ? "completed" : "number"}
+                  initial={{ opacity: 0, scale: 0.65 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.65 }}
+                  transition={reduced ? { duration: 0 } : interfaceSpring}
+                >
+                  {completed ? <Icon name="check" size={17} /> : index + 1}
+                </m.span>
+              </AnimatePresence>
+            </span>
+            <span className="sr-only">
+              {completed
+                ? "Completed: "
+                : current
+                  ? "Current step: "
+                  : "Upcoming: "}
+            </span>
+            <strong>{step.title}</strong>
+            <p>{step.detail}</p>
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
 
 export function Custody({
   shipment,

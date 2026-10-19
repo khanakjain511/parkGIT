@@ -6,7 +6,7 @@ import { crops, scenarios, rupees, type Shipment } from "@/lib/auditor";
 import { exportCertificate } from "@/lib/workspace";
 import { Modal, Badge } from "./ui";
 import { Icon } from "./icon";
-import { Custody } from "./custody";
+import { Custody, CustodyTrail } from "./custody";
 export function NewShipmentDialog({
   onClose,
   onSubmit,
@@ -184,32 +184,12 @@ export function ShipmentDetail({
             °C · No automatic liability decision.
           </p>
         </div>
-        <div>
-          <h3 className="mb-4 text-sm font-semibold">
-            Custody trail{" "}
-            <span className="ml-2 text-[10px] font-normal text-muted">
-              Demonstration record
-            </span>
+        <section aria-labelledby="custody-trail-title">
+          <h3 id="custody-trail-title" className="mb-4 text-sm font-semibold">
+            Custody trail
           </h3>
-          <div className="custody-trail">
-            {[
-              ["Origin", "Loading record captured"],
-              ["Carrier", "Trip telemetry available"],
-              [
-                "Receiver",
-                selected.status === "Delivered"
-                  ? "Delivery recorded"
-                  : "Handover pending",
-              ],
-            ].map(([title, detail], i) => (
-              <div key={title}>
-                <span className="step-circle">{i + 1}</span>
-                <strong>{title}</strong>
-                <small>{detail}</small>
-              </div>
-            ))}
-          </div>
-        </div>
+          <CustodyTrail shipment={selected} />
+        </section>
         <Custody shipment={selected} onUpdate={onUpdate} />
         <div className="flex flex-wrap justify-end gap-2 border-t border-line pt-5">
           <CandyButton

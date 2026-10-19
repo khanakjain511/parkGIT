@@ -50,25 +50,22 @@ export function ShipmentTable({
                 }
               >
                 <td>
-                  <CandyButton
-                    className="flex items-center gap-3 text-left"
-                    onClick={() => onSelect(s)}
+                  <button
+                    type="button"
+                    className="shipment-link"
+                    onClick={(event) => {
+                      event.currentTarget.focus({ preventScroll: true });
+                      onSelect(s);
+                    }}
                   >
-                    <span
-                      className={`cargo-icon ${s.crop === "Banana" ? "cargo-amber" : s.crop === "Leafy greens" ? "cargo-green" : ""}`}
-                    >
-                      <Icon name="leaf" size={17} />
+                    <span className="shipment-link-label font-semibold text-ink">
+                      {s.id}
                     </span>
-                    <span>
-                      <span className="block font-semibold text-ink">
-                        {s.id}
-                      </span>
-                      <span className="mt-1 block text-[11px] text-muted">
-                        {s.crop}{" "}
-                        {s.id === "PB-0941" ? "· 4,200 kg" : "· Reefer cargo"}
-                      </span>
+                    <span className="mt-1 block text-[11px] text-muted">
+                      {s.crop}{" "}
+                      {s.id === "PB-0941" ? "· 4,200 kg" : "· Reefer cargo"}
                     </span>
-                  </CandyButton>
+                  </button>
                 </td>
                 <td>
                   <span className="block text-xs text-ink">

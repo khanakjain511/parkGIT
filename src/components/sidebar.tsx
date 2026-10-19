@@ -136,29 +136,11 @@ export function Sidebar({
           onClick={() => navigate("Settings")}
         />
         <div className="sidebar-bottom">
-          <div className="pilot-card">
-            <span className="flex items-center gap-2 text-xs font-semibold text-green">
-              <Icon name="leaf" size={16} />
-              Built for a fairer cold chain.
-            </span>
-            <p>
-              Better evidence.
-              <br />
-              Less waste. Fairer outcomes.
-            </p>
-            <CandyButton onClick={() => onHelp()}>
-              About this workspace <Icon name="arrow" size={13} />
-            </CandyButton>
-          </div>
           <CandyButton className="help-link" onClick={() => onHelp()}>
             <Icon name="help" size={16} />
             Help & product guide
             <Icon name="arrow" size={12} />
           </CandyButton>
-          <div className="sidebar-status">
-            <span className="status-dot" />
-            Shadow pilot · Demo data<span>v1.0</span>
-          </div>
         </div>
       </m.aside>
     </LayoutGroup>

@@ -162,28 +162,39 @@ export default function Platform() {
               <Icon name="grid" />
             </CandyButton>
             <span className="topbar-breadcrumb">
-              Workspace <span>/</span> <strong>{view}</strong>
+              <span className="breadcrumb-root">
+                Workspace <span>/</span>
+              </span>
+              <strong>{view}</strong>
             </span>
           </div>
           <div className="topbar-tools">
             <form
               className="global-search"
+              role="search"
+              aria-label="Shipment search"
               onSubmit={(e) => {
                 e.preventDefault();
                 setView("Shipments");
               }}
             >
-              <Icon name="search" size={16} />
               <input
+                type="search"
                 aria-label="Search shipments"
-                placeholder="Search shipments, routes..."
+                placeholder="Search shipments or routes"
                 value={search}
                 onChange={(e) => {
                   setSearch(e.target.value);
                   if (e.target.value) setView("Shipments");
                 }}
               />
-              <kbd>↵</kbd>
+              <CandyButton
+                className="search-submit icon-button"
+                type="submit"
+                aria-label="Search shipments"
+              >
+                <Icon name="search" size={17} />
+              </CandyButton>
             </form>
             <span className="date-display">
               <Icon name="calendar" size={15} />
@@ -195,7 +206,7 @@ export default function Platform() {
               onClick={() => navigate("Alerts & interventions")}
               aria-label="Open notifications"
             >
-              <Icon name="bell" size={19} />
+              <Icon name="bell" size={18} />
               {workspace.acknowledged.length < 3 && <span />}
             </CandyButton>
             <span className="topbar-divider" />
@@ -257,7 +268,7 @@ export default function Platform() {
               {view === "Shipments" && (
                 <Panel
                   title="Shipment register"
-                  subtitle={`${filtered.length} shipments · Local demonstration workspace`}
+                  subtitle={`${filtered.length} ${filtered.length === 1 ? "shipment" : "shipments"}`}
                   action={
                     <select
                       className="select-small"
@@ -357,16 +368,6 @@ export default function Platform() {
               {view === "Settings" && <Settings notify={setNotice} />}
             </PageTransition>
           </AnimatePresence>
-          <footer className="main-footer">
-            <span>
-              Perishables Black Box <span className="mx-2">·</span> Evidence for
-              a fairer journey.
-            </span>
-            <span>
-              <span className="status-dot" />
-              Demo workspace · No live financial transactions
-            </span>
-          </footer>
         </main>
       </div>
       <AnimatePresence initial={false}>
