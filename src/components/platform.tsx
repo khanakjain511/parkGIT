@@ -181,7 +181,7 @@ export default function Platform() {
               <input
                 type="search"
                 aria-label="Search shipments"
-                placeholder="Search shipments or routes"
+                placeholder="Search shipments"
                 value={search}
                 onChange={(e) => {
                   setSearch(e.target.value);
